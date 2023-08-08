@@ -75,17 +75,14 @@ class Server:
         similar_docs = self.get_similiar_docs(query)
         prompt = ChatPromptTemplate.from_messages([
             SystemMessagePromptTemplate.from_template(
-                """
-
-                """"
+               """"
+               """
             ),
             MessagesPlaceholder(variable_name="history"),
-            HumanMessagePromptTemplate.from_template("{input}")
+            HumanMessagePromptTemplate.from_template("{similar_docs} + {query}")
         ])
         llm = ChatOpenAI(temperature=0)
         memory = ConversationBufferMemory(return_messages=True)
         conversation = ConversationChain(memory=memory, prompt=prompt, llm=llm)
-        conversation.add_messages(similar_docs)
-        conversation.add_message(query)
-        conversation.generate_next_message()
-        return conversation.get_last_message().text
+        return conversation.predict(query)
+        
