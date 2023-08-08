@@ -79,10 +79,10 @@ class Server:
                """
             ),
             MessagesPlaceholder(variable_name="history"),
-            HumanMessagePromptTemplate.from_template("{similar_docs} + {query}")
+            HumanMessagePromptTemplate.from_template("{similar_docs} + {input}")
         ])
         llm = ChatOpenAI(temperature=0)
         memory = ConversationBufferMemory(return_messages=True)
         conversation = ConversationChain(memory=memory, prompt=prompt, llm=llm)
-        return conversation.predict(query)
+        return conversation.predict(input = query, similar_docs=similar_docs, input= query)
         
