@@ -1,4 +1,4 @@
-# Kutty- an AI to manage Menu card in hotels
+# Kutty- an AI to manage Dinein system
 
 ## Introduction
 Kutty is an AI to manage Menu card in hotels. It is a chatbot which can be used to order food in hotels. It can also be used to get the details of the food items in the menu card. It also has a feature to get the details of customer's wish and check the availability of the food item in the hotel. It is a very user friendly chatbot which can be used by anyone.
