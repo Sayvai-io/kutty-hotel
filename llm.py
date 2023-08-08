@@ -91,5 +91,5 @@ class Server:
         llm = ChatOpenAI(temperature=0)
         memory = ConversationBufferMemory(return_messages=True)
         conversation = ConversationChain(memory=memory, prompt=prompt, llm=llm)
-        return conversation.predict(input = query, similar_docs=similar_docs, input= query)
+        return conversation.predict(similar_docs=similar_docs, input= query)
         
