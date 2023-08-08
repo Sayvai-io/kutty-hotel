@@ -9,4 +9,3 @@ pydantic==1.10.9
 uvicorn==0.23.1
 twilio==8.5.0
 python-multipart==0.0.6
-fastapi
