@@ -46,6 +46,7 @@ class Server:
         self.chain = None
         self.chunk_size: int = 1000
         self.chunk_overlap: int = 100
+        self.memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
     # @staticmethod
     def load_docs(self):
@@ -186,8 +187,7 @@ class Server:
             HumanMessagePromptTemplate.from_template("{input}")
         ])
         llm = ChatOpenAI(temperature=0)
-        memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
-        conversation = ConversationChain(memory=memory, prompt=prompt, llm=llm)
+        conversation = ConversationChain(memory=self.memory, prompt=prompt, llm=llm)
         return conversation.predict(input = str(similar_docs) +" "+ query)
 
 
