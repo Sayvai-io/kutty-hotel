@@ -60,7 +60,7 @@ class Server:
         #   self.split_docs()
         embeddings = OpenAIEmbeddings()
         self.index = Pinecone.from_existing_index(self.defalut_params["index_name"], embeddings,
-                                                  namespace="Proposal-investors")
+                                                  namespace="pearl-hotel")
         print(self.index)
 
     # @staticmethod
