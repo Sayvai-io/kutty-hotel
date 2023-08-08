@@ -182,11 +182,13 @@ class Server:
                     Fruit Platter - ₹350
                """
             ),
-            MessagesPlaceholder(variable_name=["history","similar_docs","input"]),
-            HumanMessagePromptTemplate.from_template("context:{similar_docs} , query:{input}")
+            MessagesPlaceholder(variable_name="chat_history"),
+            HumanMessagePromptTemplate.from_template("{input}")
         ])
         llm = ChatOpenAI(temperature=0)
-        memory = ConversationBufferMemory(return_messages=True)
+        memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
         conversation = ConversationChain(memory=memory, prompt=prompt, llm=llm)
-        return conversation.predict(similar_docs=similar_docs, input= query)
+        return conversation.predict(input = str(similar_docs) +" "+ query)
+
+
         
