@@ -1,7 +1,14 @@
 # Server class for the project
 
 # from langchain.llms import OpenLLM
-
+import os
+import openai
+import os
+from langchain.embeddings.openai import OpenAIEmbeddings
+import pinecone
+from langchain.vectorstores import Pinecone
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.document_loaders import DirectoryLoader
 from langchain.prompts import (
     ChatPromptTemplate,
     MessagesPlaceholder,
