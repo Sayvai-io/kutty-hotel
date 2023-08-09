@@ -28,3 +28,15 @@ for speech to text we can use open source api like google, ibm, etc
 ### 4. GUI
 
 html and css is used to create the GUI
+
+## To run
+
+### 1. Install the requirements
+
+```bash
+pip install -r requirements.txt
+```
+and run the following command to run `app.py`
+```bash
+uvicorn app:app --reload --port 5000 --host "0.0.0.0"
+```

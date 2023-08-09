@@ -1,13 +1,23 @@
-import gradio as gr
-import numpy as np
-from scipy.io.wavfile import write
-import assemblyai as aai
+# gradio app 
+# import requests
+# import gradio as gr
+# from llm import Server
 
 
-def get_text(path: str) -> str:
-    return "Hello World"
+# API_URL = "https://api-inference.huggingface.co/models/openai/whisper-medium"
+# API_TOKEN = ""
+# headers = {"Authorization": f"Bearer {API_TOKEN}"}
 
-gr.Interface(
-    fn=get_text, 
-    inputs=gr.Audio(source="microphone", type="filepath"),
-    outputs="text").launch()
+
+# def get_text(file: str) -> str:
+#     response = requests.post(API_URL, headers=headers, json={"inputs": file})
+#     return response.json()
+    
+
+
+# # server = Server()
+# # server.load_pinecone()
+# gr.Interface(
+# fn=get_text, 
+# inputs=gr.Audio(source="microphone", type="filepath"),
+# outputs="text").launch()

@@ -63,9 +63,6 @@ async def chat(item : Item):
 
 @app.post("/upload")
 async def upload_audio(audio: UploadFile = File(...)):
-    # Here, you can process the uploaded audio file as needed
-    # For example, you could save it to a specific location
-    # and return a response with the URL to the saved audio file
     return {"message": "Audio uploaded successfully"}
     
 @app.get("/")
@@ -74,7 +71,7 @@ async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
     
 
-if __name__ == "__main__":
-    server = Server()
-    server.load_pinecone()
-    uvicorn.run(app, port=8000)
+
+server = Server()
+server.load_pinecone()
+  
