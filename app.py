@@ -1,5 +1,4 @@
 # app.py
-import uvicorn
 from fastapi import FastAPI,Form
 from pydantic import BaseModel
 # to avoid CORS errors when running locally
@@ -61,14 +60,11 @@ def get_response(query: str):
 async def chat(item : Item):
     return get_response(item.text)
 
-@app.post("/upload")
+@app.post("/upload-audio")
 async def upload_audio(audio: UploadFile = File(...)):
-    return {"message": "Audio uploaded successfully"}
-    
-@app.get("/")
-async def read_root(request: Request):
-    # get file from form
-    return templates.TemplateResponse("index.html", {"request": request})
+    # use whisperaudio to convert audio to text
+    text = get_text(audio.file)
+    return {"text": text}
     
 
 

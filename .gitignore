@@ -7,3 +7,4 @@ test.py
 openai_api_key.txt
 .venv
 pyproject.toml
+test-audio-file
