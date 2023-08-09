@@ -1,4 +1,5 @@
 # app.py
+import uvicorn
 from fastapi import FastAPI,Form
 from pydantic import BaseModel
 # to avoid CORS errors when running locally
@@ -7,6 +8,11 @@ from fastapi import FastAPI, Request, Response
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 from llm import Server
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi import File, UploadFile
+from whisperaudio import get_text
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 
 origins = [
@@ -35,6 +41,9 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+# app.mount("/templates", StaticFiles(directory="templates"), name="static")
+templates = Jinja2Templates(directory="templates")
+
 class Item(BaseModel):
     text : str
     
@@ -48,11 +57,24 @@ async def chat(request: Request):
 def get_response(query: str):
     return server.get_answer(query)
     
-@app.post('/')
+@app.post('/kutty')
 async def chat(item : Item):
     return get_response(item.text)
-    
-# Get Data as a form and return response
 
-server = Server()
-server.load_pinecone()  
+@app.post("/upload")
+async def upload_audio(audio: UploadFile = File(...)):
+    # Here, you can process the uploaded audio file as needed
+    # For example, you could save it to a specific location
+    # and return a response with the URL to the saved audio file
+    return {"message": "Audio uploaded successfully"}
+    
+@app.get("/")
+async def read_root(request: Request):
+    # get file from form
+    return templates.TemplateResponse("index.html", {"request": request})
+    
+
+if __name__ == "__main__":
+    server = Server()
+    server.load_pinecone()
+    uvicorn.run(app, port=8000)
