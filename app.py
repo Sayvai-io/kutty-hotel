@@ -1,4 +1,5 @@
 # app.py
+import requests
 from fastapi import FastAPI,Form
 from pydantic import BaseModel
 # to avoid CORS errors when running locally
@@ -7,11 +8,12 @@ from fastapi import FastAPI, Request, Response
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 from llm import Server
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse
 from fastapi import File, UploadFile
 from whisperaudio import get_text
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from tts import convert_to_audio
 
 
 origins = [
@@ -60,11 +62,21 @@ def get_response(query: str):
 async def chat(item : Item):
     return get_response(item.text)
 
+def api_call(url : str):
+    response = requests.get(url= url)
+    with open("audio/test.mp3","wb") as f:
+        f.write(response.content)
+    return "audio/test.mp3"
+
 @app.post("/upload-audio")
 async def upload_audio(audio: UploadFile = File(...)):
     # use whisperaudio to convert audio to text
     text = get_text(audio.file)
-    return {"text": text}
+    print(text)
+    response = convert_to_audio(text['text'])
+    # return as file response
+    # return FileResponse(requests.get(response), media_type="audio/mpeg")
+    return FileResponse(api_call(response), media_type="audio/mpeg")
     
 
 
