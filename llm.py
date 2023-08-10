@@ -84,103 +84,14 @@ class Server:
         prompt = ChatPromptTemplate.from_messages([
             SystemMessagePromptTemplate.from_template(
                """"
-               You are talking to kutty. You are a hotel bot. 
+               You are a hotel bot named kutty. 
                ###Instruction###
-               You should provide information only about food. You should always be polite. If you don't know the answer,don't try to make up an answer.
-               Answer that you'll ask the chef and get back.
+               You should provide information only about food items in the Menu.
+               Provide only the list of food names while suggesting food and not the description.
+               describe only when the user asks. 
+               You should always be polite and respond briefly. 
+               If you don't know the answer,don't try to make up an answer.
 
-               ###Menu###
-                Appetizers:
-
-                    Spring Rolls - ₹400
-                    Dumplings Sampler - ₹550
-                    Hot and Sour Soup - ₹350
-                    Crispy Wontons - ₹300
-                    Scallion Pancakes - ₹250
-                    Sesame Cold Noodles - ₹400
-                    Salt and Pepper Calamari - ₹600
-                    Crab Rangoon - ₹450
-
-                    Soups:
-
-                    Wonton Soup - ₹450
-                    Egg Drop Soup - ₹300
-                    Hot and Sour Soup - ₹350
-                    Miso Soup - ₹250
-                    Corn and Crab Soup - ₹400
-                    Lemon Coriander Soup - ₹300
-                    Seafood Tom Yum Soup - ₹500
-                    Vegetable Tofu Noodle Soup - ₹350
-                    Chinese Herbal Chicken Soup - ₹450
-
-                    Main Courses:
-
-                    General Tso's Chicken - ₹800
-                    Kung Pao Shrimp - ₹950
-                    Beef with Broccoli - ₹850
-                    Mapo Tofu - ₹600
-                    Sweet and Sour Pork - ₹700
-                    Vegetable Chow Mein - ₹550
-                    Cashew Chicken - ₹750
-                    Black Bean Sauce Tofu - ₹550
-                    Orange Glazed Beef - ₹900
-                    Sesame Tofu Stir-Fry - ₹600
-                    Spicy Garlic Eggplant - ₹650
-                    Honey Walnut Shrimp - ₹850
-
-                    Specialties:
-
-                    Peking Duck (Half) - ₹2000
-                    Peking Duck (Full) - ₹3500
-                    Mongolian Beef - ₹1200
-                    Szechuan Eggplant - ₹600
-                    Crispy Honey Chicken - ₹850
-                    Cantonese Steamed Fish - ₹1100
-                    Five Spice Spare Ribs - ₹950
-                    Dragon and Phoenix - ₹1200
-                    Lotus Leaf Rice - ₹800
-                    Crispy Sesame Tofu - ₹750
-                    Tea-Smoked Duck - ₹1400
-                    Stir-Fried Clams with Black Bean Sauce - ₹1100
-
-                    Side Dishes:
-
-                    Steamed Jasmine Rice - ₹50
-                    Vegetable Fried Rice - ₹300
-                    Egg Fried Rice - ₹250
-                    Stir-Fried Noodles - ₹350
-                    Garlic Bok Choy - ₹200
-                    Szechuan Cucumber Salad - ₹250
-                    Hot and Spicy Tofu - ₹300
-                    Sesame Green Beans - ₹250
-                    Scallion Pancakes - ₹250
-                    Crispy Wonton Strips - ₹150
-
-                    Drinks:
-
-                    Jasmine Green Tea - ₹150
-                    Lychee Cooler - ₹200
-                    Fortune Iced Tea - ₹150
-                    Ginger Honey Lemonade - ₹180
-                    Chinese Herbal Tea - ₹180
-                    Coconut Water - ₹120
-                    Mango Lassi - ₹220
-                    Chinese Plum Juice - ₹170
-                    Green Apple Sparkler - ₹190
-                    Hot Ginger Tea - ₹160
-
-                    Desserts:
-
-                    Fortune Cookies (Complimentary)
-                    Mango Sticky Rice - ₹300
-                    Red Bean Paste Pancakes - ₹250
-                    Sesame Balls - ₹200
-                    Almond Tofu Pudding - ₹220
-                    Fried Ice Cream - ₹280
-                    Coconut Jelly - ₹180
-                    Osmanthus Jelly - ₹200
-                    Black Sesame Soup - ₹250
-                    Fruit Platter - ₹350
                """
             ),
             MessagesPlaceholder(variable_name="chat_history"),
@@ -189,6 +100,3 @@ class Server:
         llm = ChatOpenAI(temperature=0)
         conversation = ConversationChain(memory=self.memory, prompt=prompt, llm=llm)
         return conversation.predict(input = str(similar_docs) +" "+ query)
-
-
-        
