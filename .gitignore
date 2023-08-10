@@ -9,3 +9,4 @@ openai_api_key.txt
 pyproject.toml
 test-audio-file
 tts-key.txt
+tests
