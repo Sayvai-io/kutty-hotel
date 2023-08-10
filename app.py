@@ -76,7 +76,7 @@ def api_call(url : str):
     return "audio/test.mp3"
 
 @app.post("/upload")
-async def upload_audio(audio: UploadFile = File(...)):
+async def upload_audio(request:Request,audio: UploadFile = File(...)):
     # use whisperaudio to convert audio to text
     text = get_text(audio.file)
     print("Transcribed : ",text)
@@ -85,12 +85,14 @@ async def upload_audio(audio: UploadFile = File(...)):
     # response = convert_to_audio(text)
     # return as file response
     # return FileResponse(api_call(response), media_type="audio/mpeg")
-    return text
+    with open("response.txt", "w", encoding="utf-8") as f:
+        f.write(text) 
+    return templates.TemplateResponse("index.html", {"request": request, "text_result": "hello are "})
 
 
 @app.get("/")
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request, "text_result":""})
 
     
 
