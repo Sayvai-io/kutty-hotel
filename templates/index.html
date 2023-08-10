@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>Audio Recorder</h1>
-    <p>Press and hold the "R" key to start recording, release to stop.</p>
+    <p>Press and hold the "Spacebar" key to start recording, release to stop.</p>
     <button id="startBtn" disabled style="display: none">
       Start Recording
     </button>
@@ -35,13 +35,13 @@
     document.addEventListener("keyup", handleKeyUp);
 
     function handleKeyDown(event) {
-      if (event.key === "r" && !isRecording) {
+      if (event.key === " " && !isRecording) {
         startRecording();
       }
     }
 
     function handleKeyUp(event) {
-      if (event.key === "r" && isRecording) {
+      if (event.key === " " && isRecording) {
         stopRecording();
       }
     }
