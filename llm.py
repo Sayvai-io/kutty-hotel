@@ -116,4 +116,4 @@ class Server:
 
         result = translate_client.translate(text, target_language="ta")
         
-        return result
+        return result["translatedText"]
