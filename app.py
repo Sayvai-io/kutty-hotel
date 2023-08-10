@@ -82,10 +82,10 @@ async def upload_audio(audio: UploadFile = File(...)):
     print("Transcribed : ",text)
     text = get_response(text['text'])
     print("LLM Response : ",text)
-    response = convert_to_audio(text)
+    # response = convert_to_audio(text)
     # return as file response
-    return FileResponse(api_call(response), media_type="audio/mpeg")
-    # return text
+    # return FileResponse(api_call(response), media_type="audio/mpeg")
+    return text
 
 
 @app.get("/")
