@@ -3,7 +3,6 @@
 # from langchain.llms import OpenLLM
 import os
 import openai
-import os
 from langchain.embeddings.openai import OpenAIEmbeddings
 import pinecone
 from langchain.vectorstores import Pinecone
@@ -18,6 +17,7 @@ from langchain.prompts import (
 from langchain.chains import ConversationChain
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
+from google.cloud import translate_v2 as translate
 
 
 
@@ -105,4 +105,15 @@ class Server:
         ])
         llm = ChatOpenAI(temperature=0)
         conversation = ConversationChain(memory=self.memory, prompt=prompt, llm=llm)
-        return conversation.predict(input = str(similar_docs) +" "+ query)
+        text = conversation.predict(input = str(similar_docs) +" "+ query)
+
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"google.json"
+
+        translate_client = translate.Client()
+
+        if isinstance(text, bytes):
+            text = text.decode("utf-8")
+
+        result = translate_client.translate(text, target_language="ta")
+        
+        return result
