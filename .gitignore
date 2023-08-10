@@ -12,3 +12,4 @@ tts-key.txt
 tests
 test
 audio/test.mp3
+.pytest_cache

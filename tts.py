@@ -45,7 +45,7 @@ def convert_to_audio(text : str):
         "content": [
             text
         ],
-        "voice": "ta-IN-Standard-A"
+        "voice": "ta-IN-PallaviNeural"
     }
     # return file as response
     audiourl = get_audio_url(requests.post(API_URL, headers=headers, json=data).json()['transcriptionId'])

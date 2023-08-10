@@ -73,11 +73,17 @@ class Server:
 
     # @staticmethod
     def get_similiar_docs(self, query, k=2, score=False):
-        if score:
-            similar_docs = self.index.similarity_search_with_score(query, k=k)
-        else:
-            similar_docs = self.index.similarity_search(query, k=k)
-        return similar_docs
+        try:
+            if len(query)!=0:
+                if score:
+                    similar_docs = self.index.similarity_search_with_score(query, k=k)
+                else:
+                    similar_docs = self.index.similarity_search(query, k=k)
+                return similar_docs
+        except  ValueError:
+            return None
+        
+            
 
     def get_answer(self, query):
         similar_docs = self.get_similiar_docs(query)
