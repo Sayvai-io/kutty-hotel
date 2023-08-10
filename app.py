@@ -1,4 +1,5 @@
 # app.py
+import os
 import requests
 from fastapi import FastAPI,Form
 from pydantic import BaseModel
@@ -19,6 +20,8 @@ from tts import convert_to_audio
 origins = [
     "http://localhost",
     "http://localhost:8080",
+    "http://localhost:5000",
+    "http://localhost:8000",
 ]
 # cors middleware
 
@@ -41,6 +44,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+class AudioData(BaseModel):
+    audio: UploadFile
+
 
 # app.mount("/templates", StaticFiles(directory="templates"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -68,15 +75,23 @@ def api_call(url : str):
         f.write(response.content)
     return "audio/test.mp3"
 
-@app.post("/upload-audio")
+@app.post("/upload")
 async def upload_audio(audio: UploadFile = File(...)):
     # use whisperaudio to convert audio to text
     text = get_text(audio.file)
-    print(text)
-    response = convert_to_audio(text['text'])
+    print("Transcribed : ",text)
+    text = get_response(text['text'])
+    print("LLM Response : ",text)
+    response = convert_to_audio(text)
     # return as file response
     # return FileResponse(requests.get(response), media_type="audio/mpeg")
     return FileResponse(api_call(response), media_type="audio/mpeg")
+
+
+@app.get("/")
+async def read_root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
     
 
 
