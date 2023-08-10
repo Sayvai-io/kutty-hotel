@@ -16,7 +16,7 @@
     <div>
       <p>Server response:</p>
       <pre id="serverResponse"></pre>
-      <p id="response"> here it is{{ text_result }}</p>
+      <p id="response"></p>
     </div>
   </body>
   <script>
@@ -100,5 +100,13 @@
           console.error("Error sending audio data:", error);
         });
     }
+
+    function load_data_text() {
+            fetch('response.txt')
+                .then(response => response.text())
+                .then(txtContent => {
+                    document.getElementById('response').textContent = txtContent;
+                });
+        }
   </script>
 </html>
