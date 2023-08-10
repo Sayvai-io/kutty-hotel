@@ -10,4 +10,5 @@ pyproject.toml
 test-audio-file
 tts-key.txt
 tests
-audio/*
+test
+audio/test.mp3
