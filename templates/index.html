@@ -95,13 +95,14 @@
         .then((response) => response.json())
         .then((data) => {
           console.log("Server response:", data);
+          load_data_text();
         })
         .catch((error) => {
           console.error("Error sending audio data:", error);
         });
     }
 
-    function load_data_text() {
+    window.onload =  function () {
             fetch('response.txt')
                 .then(response => response.text())
                 .then(txtContent => {
